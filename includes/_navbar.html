@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('main.index') }}">QL Căn tin</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarNav" aria-controls="navbarNav"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarNav">
+        {% if current_user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <!-- Bán hàng → /orders/create -->
+            <a class="nav-link" href="{{ url_for('order.create_order') }}">Bán hàng</a>
+          </li>
+          <li class="nav-item">
+            <!-- Thực đơn → /menu/ -->
+            <a class="nav-link" href="{{ url_for('menu.list_dishes') }}">Thực đơn</a>
+          </li>
+          <li class="nav-item">
+            <!-- Kho hàng → /inventory/ -->
+            <a class="nav-link" href="{{ url_for('inventory.list_items') }}">Kho hàng</a>
+          </li>
+          <li class="nav-item">
+            <!-- Báo cáo (doanh thu) → /reports/revenue -->
+            <a class="nav-link" href="{{ url_for('report.revenue_report') }}">Báo cáo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('order.history') }}">Lịch sử hóa đơn</a>
+          </li>
+          
+  
+          {% if current_user.vai_tro and current_user.vai_tro.TenVaiTro == 'Quản lý' %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('user.list_users') }}">Quản lý người dùng</a>
+          </li>
+          {% endif %}
+        </ul>
+  
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ current_user.HoTen }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Đăng xuất</a></li>
+            </ul>
+          </li>
+        </ul>
+        {% else %}
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.login') }}">Đăng nhập</a>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Quản lý người dùng{% endblock %}
+{% block content %}
+  <h2>Danh sách người dùng</h2>
+  <a href="{{ url_for('user.add_user') }}" class="btn btn-primary mb-3">Thêm người dùng mới</a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Họ Tên</th>
+        <th>Tên Đăng Nhập</th>
+        <th>Vai Trò</th>
+        <th>Trạng Thái</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user.MaNguoiDung }}</td>
+        <td>{{ user.HoTen }}</td>
+        <td>{{ user.TenDangNhap }}</td>
+        <td>{{ user.vai_tro.TenVaiTro }}</td>
+        <td>{{ user.TrangThai }}</td>
+        <td>
+            <a href="{{ url_for('user.edit_user', user_id=user.MaNguoiDung) }}" class="btn btn-sm btn-warning">Sửa</a>
+            <form method="POST" action="{{ url_for('user.delete_user', user_id=user.MaNguoiDung) }}"
+                  style="display:inline"
+                  onsubmit="return confirm('Xóa/khóa tài khoản này?');">
+              <button type="submit" class="btn btn-sm btn-danger"
+                      {% if current_user.MaNguoiDung == user.MaNguoiDung %}disabled title="Không thể xóa chính mình"{% endif %}>
+                Xóa
+              </button>
+            </form>
+          </td>
+          
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+

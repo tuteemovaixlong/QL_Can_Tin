@@ -55,6 +55,10 @@ class HoaDon(db.Model):
     MaNguoiDung = db.Column(db.Integer, db.ForeignKey('NguoiDung.MaNguoiDung'))
     TongTien = db.Column(db.Numeric(18, 0), nullable=False)
     ChiTiet = db.relationship('ChiTietHoaDon', backref='hoa_don', lazy='dynamic')
+    # Trong HoaDon
+    nguoi_dung = db.relationship('NguoiDung', backref='hoa_don', lazy=True)
+
+
 
 class ChiTietHoaDon(db.Model):
     __tablename__ = 'ChiTietHoaDon'
@@ -63,6 +67,8 @@ class ChiTietHoaDon(db.Model):
     MaMonAn = db.Column(db.Integer, db.ForeignKey('MonAn.MaMonAn'))
     SoLuong = db.Column(db.Integer, nullable=False)
     DonGia = db.Column(db.Numeric(18, 0), nullable=False)
+    # Trong ChiTietHoaDon
+    mon_an = db.relationship('MonAn', backref='chi_tiet_hoa_don', lazy=True)
 
     @property
     def ThanhTien(self):
